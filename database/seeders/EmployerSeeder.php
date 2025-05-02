@@ -21,14 +21,13 @@ class EmployerSeeder extends Seeder
                 'role' => 'Employee',
                 'date_embauche' => '2023-06-15',
                 'post' => 'Developer',
-                'apartment' => 'Études',
+                'appartment_id' => 'APT001', // Changed from 'apartment'
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             // Add more employers as needed
         ];
 
-        // Use updateOrInsert to avoid duplicates
         foreach ($employers as $employer) {
             DB::table('employers')->updateOrInsert(
                 ['matricul_employer' => $employer['matricul_employer']],

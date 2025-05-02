@@ -3,11 +3,12 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
 
-class Manager extends Model
+class Manager extends Authenticatable
 {
-    use HasFactory;
+    use HasFactory, Notifiable;
 
     protected $primaryKey = 'matricul_manager';
     public $incrementing = false;
@@ -15,31 +16,49 @@ class Manager extends Model
 
     protected $fillable = [
         'matricul_manager',
-        'apartment_id',
         'first_name',
         'last_name',
         'email',
         'passwordM',
+        'appartment_id',
+        'remember_token',
     ];
 
-    public function apartment()
-    {
-        return $this->belongsTo(Apartment::class, 'apartment_id', 'id');
-    }
-    public function getAuthPassword()
-    {
-        return $this->passwordM;
-    }
+    protected $hidden = [
+        'passwordM',
+        'remember_token',
+    ];
 
-   
+    protected $casts = [
+        'email_verified_at' => 'datetime',
+    ];
 
-    public function employees()
+    public function appartment()
     {
-        return $this->hasMany(Employer::class, 'apartment_id', 'apartment_id');
+        return $this->belongsTo(Appartment::class, 'appartment_id', 'id');
     }
 
     public function tasks()
     {
-        return $this->hasMany(Task::class, 'matricul_manager');
+        return $this->hasMany(Task::class, 'matricul_manager', 'matricul_manager');
     }
+
+    public function vacationRequests()
+    {
+        return $this->hasMany(VacationRequest::class, 'validated_by_manager', 'matricul_manager');
+    }
+    // In your Manager model
+public function getAuthIdentifierName()
+{
+    return 'matricul_manager';
+}
+
+public function getAuthIdentifier()
+{
+    return $this->matricul_manager;
+}
+public function getAuthPassword()
+{
+    return $this->passwordM;
+}
 }

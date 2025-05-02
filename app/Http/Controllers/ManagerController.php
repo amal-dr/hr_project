@@ -41,7 +41,7 @@ class ManagerController extends Controller
         $manager = Auth::guard('manager')->user();
         
         // Get all employees in same apartment
-        $employees = Employer::where('apartment_id', $manager->apartment_id)->get();
+        $employees = Employer::where('appartment_id', $manager->appartment_id)->get();
         
         // Get pending vacation requests
         $vacationRequests = VacationRequest::with('employer')

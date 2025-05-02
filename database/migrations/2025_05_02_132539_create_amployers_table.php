@@ -21,8 +21,14 @@ return new class extends Migration
             $table->string('role');
             $table->datetime('date_embauche');
             $table->string('post');
-            $table->enum('apartment', ['Études', 'Affaires Juridiques et Foncières', 'Gestion Urbaine', 'Administratif et Financier']);
+            $table->string('appartment_id')->nullable(); // Foreign key column
             $table->timestamps();
+            
+            // Add foreign key constraint
+            $table->foreign('appartment_id')
+                  ->references('id')
+                  ->on('appartments')
+                  ->onDelete('set null'); // or 'cascade' depending on your needs
         });
         
     }

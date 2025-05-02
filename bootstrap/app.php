@@ -11,7 +11,11 @@ return Application::configure(basePath: dirname(__DIR__))
         health: '/up',
     )
     ->withMiddleware(function (Middleware $middleware) {
-        //
+        $middleware->alias([
+            'manager.active' => \App\Http\Middleware\EnsureManagerIsActive::class,
+            'manager.active' => \App\Http\Middleware\ManagerActive::class,
+            // Add other middleware aliases as needed
+        ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {
         //

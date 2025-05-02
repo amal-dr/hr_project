@@ -1,35 +1,40 @@
 <?php
 
-// app/Models/Task.php
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Task extends Model
 {
+    use HasFactory;
+
     protected $fillable = [
+        'title',
         'description',
+        'due_date',
         'status',
-        'deadline',
         'matricul_employer',
-        'matricul_manager'
-        
+        'matricul_manager',
+        'appartment_id',
     ];
+
     protected $casts = [
-        'deadline' => 'date:Y-m-d', // Explicitly cast as date
-        'created_at' => 'datetime',
-        'updated_at' => 'datetime'
+        'due_date' => 'date',
     ];
 
-    // Accessor for formatted deadline
-    public function getFormattedDeadlineAttribute()
+    public function employer()
     {
-        return $this->deadline ? $this->deadline->format('d/m/Y') : 'N/A';
+        return $this->belongsTo(Employer::class, 'matricul_employer', 'matricul_employer');
     }
-
 
     public function manager()
     {
-        return $this->belongsTo(Manager::class, 'matricul_manager');
+        return $this->belongsTo(Manager::class, 'matricul_manager', 'matricul_manager');
+    }
+
+    public function appartment()
+    {
+        return $this->belongsTo(Appartment::class, 'appartment_id', 'id');
     }
 }

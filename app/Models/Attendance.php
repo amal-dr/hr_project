@@ -13,14 +13,14 @@ class Attendance extends Model
         'matricul_employer',
         'date',
         'arrival_time',
-        'leave_time',  // Changed from departure_time
-        'status'
+        'leave_time',
+        'status',
     ];
 
     protected $casts = [
         'date' => 'date',
-        'arrival_time' => 'datetime:H:i:s',
-        'leave_time' => 'datetime:H:i:s',
+        'arrival_time' => 'datetime:H:i',
+        'leave_time' => 'datetime:H:i',
     ];
 
     public function employer()

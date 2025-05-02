@@ -15,23 +15,21 @@ class DatabaseSeeder extends Seeder
         
         // Clear tables in proper order (child tables first)
         DB::table('attendances')->truncate();
-        DB::table('vacation_requests')->truncate();
         DB::table('tasks')->truncate();
         DB::table('employers')->truncate();
-        DB::table('appartments')->truncate();
         DB::table('managers')->truncate();
+        DB::table('appartments')->truncate();
         
         // Re-enable foreign key checks
         DB::statement('SET FOREIGN_KEY_CHECKS=1;');
         
-        // Seed in proper order
+        // Seed in proper order (parents first)
         $this->call([
-            ManagerSeeder::class,
             AppartmentSeeder::class,
+            ManagerSeeder::class,
             EmployerSeeder::class,
             TaskSeeder::class,
             AttendanceSeeder::class,
-            VacationSeeder::class,
         ]);
     }
 }

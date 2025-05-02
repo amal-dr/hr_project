@@ -2,78 +2,68 @@
 
 
 
-    /*
-    |--------------------------------------------------------------------------
-    | Authentication Guards
-    |--------------------------------------------------------------------------
-    |
-    | Next, you may define every authentication guard for your application.
-    | Of course, a great default configuration has been defined for you
-    | which utilizes session storage plus the Eloquent user provider.
-    |
-    | All authentication guards have a user provider, which defines how the
-    | users are actually retrieved out of your database or other storage
-    | system used by the application. Typically, Eloquent is utilized.
-    |
-    | Supported: "session"
-    |
-    */
-
-    // config/auth.php
 return [
     'defaults' => [
         'guard' => 'web',
         'passwords' => 'users',
     ],
 
- 'guards' => [
-    'web' => [
-        'driver' => 'session',
-        'provider' => 'users',
-    ],
-    
+    'guards' => [
+        'web' => [
+            'driver' => 'session',
+            'provider' => 'users',
+        ],
+        
         'manager' => [
             'driver' => 'session',
             'provider' => 'managers',
         ],
 
-    'employer' => [
-        'driver' => 'session',
-        'provider' => 'employers',
-    ],
-],
-
-'providers' => [
-    'users' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\User::class,
+        'employer' => [
+            'driver' => 'session',
+            'provider' => 'employers', // Note: Fix the typo (employers vs employers)
+        ],
     ],
 
-    'employers' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\Employer::class,
-    ],
-    'managers' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\Manager::class,
-    ],
-],
+    'providers' => [
+        'users' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\User::class,
+        ],
 
-'passwords' => [
-    'users' => [
-        'provider' => 'users',
-        'table' => 'password_reset_tokens',
-        'expire' => 60,
-        'throttle' => 60,
+        'employers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Employer::class,
+        ],
+        
+        'managers' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\Manager::class,
+        ],
     ],
 
-    'employers' => [
-        'provider' => 'employers',
-        'table' => 'password_reset_tokens',
-        'expire' => 60,
-        'throttle' => 60,
+    'passwords' => [
+        'users' => [
+            'provider' => 'users',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'employers' => [
+            'provider' => 'employers',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+        
+        'managers' => [
+            'provider' => 'managers',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
     ],
-],
 
     'password_timeout' => 10800,
 ];

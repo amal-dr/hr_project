@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
+    /**
+     * Run the migrations.
+     */
     public function up()
     {
         Schema::create('managers', function (Blueprint $table) {
@@ -14,12 +17,25 @@ return new class extends Migration
             $table->string('last_name');
             $table->string('email')->unique();
             $table->string('passwordM');
+            $table->string('appartment_id')->index(); // Add index first
+            
             $table->rememberToken();
             $table->timestamps();
         });
+    
+        // Add the foreign key constraint in a separate statement
+        Schema::table('managers', function (Blueprint $table) {
+            $table->foreign('appartment_id')
+                  ->references('id')
+                  ->on('appartments')
+                  ->onDelete('cascade');
+        });
     }
 
-    public function down()
+    /**
+     * Reverse the migrations.
+     */
+    public function down(): void
     {
         Schema::dropIfExists('managers');
     }

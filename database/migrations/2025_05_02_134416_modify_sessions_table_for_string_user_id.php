@@ -6,25 +6,17 @@ use Illuminate\Support\Facades\Schema;
 
 return new class extends Migration
 {
-    /**
-     * Run the migrations.
-     */
     public function up()
     {
         Schema::table('sessions', function (Blueprint $table) {
             $table->string('user_id')->nullable()->change();
         });
     }
-    
+
     public function down()
     {
         Schema::table('sessions', function (Blueprint $table) {
-            $table->integer('user_id')->nullable()->change();
+            $table->unsignedBigInteger('user_id')->nullable()->change();
         });
     }
-
-    /**
-     * Reverse the migrations.
-     */
-   
 };
